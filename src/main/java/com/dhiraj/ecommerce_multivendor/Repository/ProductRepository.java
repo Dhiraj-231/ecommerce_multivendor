@@ -13,10 +13,9 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
     List<Product> findBySellerId(Long sellerId);
 
-    @Query("SELECT p FROM Product p WHERE (:query is null or lower(p.title)" +
-            "Like lower(concat('%',:query,'%')))" +
-            "or (:query is null or lower(p.category.name))" +
-            "Like lower(concat('%',:query,'%')))")
+    @Query("SELECT p FROM Product p WHERE " +
+            "(:query IS NULL OR LOWER(p.title) LIKE LOWER(CONCAT('%', :query, '%'))) " +
+            "OR (:query IS NULL OR LOWER(p.category.name) LIKE LOWER(CONCAT('%', :query, '%')))")
 
     List<Product> searchProductByQuery(@Param("query") String query);
 

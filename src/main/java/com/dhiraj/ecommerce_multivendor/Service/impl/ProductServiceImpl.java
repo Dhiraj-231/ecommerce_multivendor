@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public Product createProduct(CreateProductRequest req, Seller seller) {
+    public Product createProduct(CreateProductRequest req, Seller seller) throws Exception {
         Category category1 = categoryRepository.findByCategoryId(req.getCategory());
         if (category1 == null) {
             Category category = new Category();
@@ -58,7 +58,6 @@ public class ProductServiceImpl implements ProductService {
             category.setParentCategory(category2);
             category3 = categoryRepository.save(category);
         }
-
         int discountPercentage = calculateDiscountPercentage(req.getMrPrice(), req.getSellingPrice());
 
         Product product = new Product();

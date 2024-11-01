@@ -11,7 +11,7 @@ import com.dhiraj.ecommerce_multivendor.Request.CreateProductRequest;
 
 public interface ProductService {
 
-    public Product createProduct(CreateProductRequest req, Seller seller);
+    public Product createProduct(CreateProductRequest req, Seller seller) throws Exception;
 
     public void deleteProduct(Long productId);
 
