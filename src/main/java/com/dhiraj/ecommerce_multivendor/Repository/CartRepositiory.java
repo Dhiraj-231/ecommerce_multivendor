@@ -6,4 +6,5 @@ import com.dhiraj.ecommerce_multivendor.Modals.Cart;
 
 public interface CartRepositiory extends JpaRepository<Cart, Long> {
 
+    Cart findByUserId(Long userId);
 }

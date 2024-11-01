@@ -8,7 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,15 +16,17 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 /**
- * Represents a shopping cart for a user in an e-commerce multi-vendor application.
- * The cart contains a set of cart items, and tracks the total selling price, total number of items, total MRP price, and any applied discount and coupon code.
+ * Represents a shopping cart for a user in an e-commerce multi-vendor
+ * application.
+ * The cart contains a set of cart items, and tracks the total selling price,
+ * total number of items, total MRP price, and any applied discount and coupon
+ * code.
  */
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 public class Cart {
     @Id
     @GeneratedValue(strategy = AUTO)
