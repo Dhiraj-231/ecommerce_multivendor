@@ -23,6 +23,7 @@ import com.dhiraj.ecommerce_multivendor.Repository.VerificationCodeRepositiory;
 import com.dhiraj.ecommerce_multivendor.Request.LoginRequest;
 import com.dhiraj.ecommerce_multivendor.Response.AuthResponse;
 import com.dhiraj.ecommerce_multivendor.Service.EmailService;
+import com.dhiraj.ecommerce_multivendor.Service.SellerReportService;
 import com.dhiraj.ecommerce_multivendor.Service.SellerService;
 import com.dhiraj.ecommerce_multivendor.Service.impl.AuthServiceImp;
 import com.dhiraj.ecommerce_multivendor.utils.OtpUtil;
@@ -39,6 +40,7 @@ public class SellerController {
     private final VerificationCodeRepositiory verificationCodeRepositiory;
     private final AuthServiceImp authServiceImp;
     private final EmailService emailService;
+    private final SellerReportService sellerReportService;
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> loginSeller(@RequestBody LoginRequest req) throws Exception {
@@ -98,9 +100,8 @@ public class SellerController {
 
     public ResponseEntity<SellerReport> getSellerReport(@RequestHeader("Authorization") String jwt) throws Exception {
         Seller seller = sellerService.getSellerProfile(jwt);
-        SellerReport sellerReport = new SellerReport();
-        sellerReport.setSeller(seller);
-        return new ResponseEntity<>(sellerReport, HttpStatus.OK);
+        SellerReport report = sellerReportService.getSellerReport(seller);
+        return new ResponseEntity<>(report, HttpStatus.OK);
     }
 
     @GetMapping("/getAll")
