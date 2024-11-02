@@ -19,6 +19,7 @@ import com.dhiraj.ecommerce_multivendor.Response.PaymentLinkResponse;
 import com.dhiraj.ecommerce_multivendor.Service.PaymentService;
 import com.dhiraj.ecommerce_multivendor.Service.SellerReportService;
 import com.dhiraj.ecommerce_multivendor.Service.SellerService;
+import com.dhiraj.ecommerce_multivendor.Service.TransactionService;
 import com.dhiraj.ecommerce_multivendor.Service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class PaymentController {
     private final UserService userService;
     private final SellerService sellerService;
     private final SellerReportService sellerReportService;
+    private final TransactionService transactionService;
 
     @GetMapping("/api/payment/{paymentId}")
     public ResponseEntity<ApiResponse> paymentSuccessHandler(
@@ -48,7 +50,7 @@ public class PaymentController {
                 paymentLinkID);
         if (paymentSuccess) {
             for (Order order : paymentOrder.getOrders()) {
-                // transactionService.createTransaction(order);
+                transactionService.createTransaction(order);
                 Seller Seller = sellerService.getSellerById(order.getSellerId());
                 SellerReport report = sellerReportService.getSellerReport(Seller);
                 report.setTotalOrders(report.getTotalOrders() + 1);
