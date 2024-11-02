@@ -7,6 +7,7 @@ import com.dhiraj.ecommerce_multivendor.Modals.PaymentOrder;
 import com.dhiraj.ecommerce_multivendor.Modals.User;
 import com.razorpay.PaymentLink;
 import com.razorpay.RazorpayException;
+import com.stripe.exception.StripeException;
 
 public interface PaymentService {
 
@@ -21,6 +22,6 @@ public interface PaymentService {
 
     PaymentLink createRazorPayPaymentLink(User user, Long amount, Long orderId) throws RazorpayException;
 
-    String createStripePaymentLink(User user, Long amount, Long orderId);
+    String createStripePaymentLink(User user, Long amount, Long orderId) throws StripeException;
 
 }
