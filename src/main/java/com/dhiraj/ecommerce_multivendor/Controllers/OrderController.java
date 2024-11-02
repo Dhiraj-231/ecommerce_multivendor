@@ -20,15 +20,19 @@ import com.dhiraj.ecommerce_multivendor.Modals.Address;
 import com.dhiraj.ecommerce_multivendor.Modals.Cart;
 import com.dhiraj.ecommerce_multivendor.Modals.Order;
 import com.dhiraj.ecommerce_multivendor.Modals.OrderItem;
+import com.dhiraj.ecommerce_multivendor.Modals.PaymentOrder;
 import com.dhiraj.ecommerce_multivendor.Modals.Seller;
 import com.dhiraj.ecommerce_multivendor.Modals.SellerReport;
 import com.dhiraj.ecommerce_multivendor.Modals.User;
+import com.dhiraj.ecommerce_multivendor.Repository.PaymentOrderRepository;
 import com.dhiraj.ecommerce_multivendor.Response.PaymentLinkResponse;
 import com.dhiraj.ecommerce_multivendor.Service.CartService;
 import com.dhiraj.ecommerce_multivendor.Service.OrderService;
+import com.dhiraj.ecommerce_multivendor.Service.PaymentService;
 import com.dhiraj.ecommerce_multivendor.Service.SellerReportService;
 import com.dhiraj.ecommerce_multivendor.Service.SellerService;
 import com.dhiraj.ecommerce_multivendor.Service.UserService;
+import com.razorpay.PaymentLink;
 
 import lombok.RequiredArgsConstructor;
 
@@ -42,6 +46,8 @@ public class OrderController {
     private final CartService cartService;
     private final SellerService sellerService;
     private final SellerReportService sellerReportService;
+    private final PaymentService paymentService;
+    private final PaymentOrderRepository paymentOrderRepository;
 
     @PostMapping("/create")
     public ResponseEntity<PaymentLinkResponse> createOrderHandler(
@@ -53,8 +59,28 @@ public class OrderController {
         Cart cart = cartService.finduserCart(user);
 
         Set<Order> orders = orderService.createOrder(user, spippingAddress, cart);
-        // PaymentOrder paymentOrder = paymentService.createOrder(user, orders);
+        PaymentOrder paymentOrder = paymentService.createOrder(user, orders);
         PaymentLinkResponse res = new PaymentLinkResponse();
+        if (paymentMethod.equals(PaymentMethod.RAZORPAY)) {
+            PaymentLink payment = paymentService.createRazorPayPaymentLink(
+                    user,
+                    paymentOrder.getAmount(),
+                    paymentOrder.getId());
+            String paymentUrl = payment.get("short_url");
+            String paymentUrlId = payment.get("id");
+            res.setPayment_link_url(paymentUrl);
+
+            paymentOrder.setPaymentLinkId(paymentUrlId);
+            paymentOrderRepository.save(paymentOrder);
+
+        } else {
+            String paymentUrl = paymentService.createStripePaymentLink(
+                    user,
+                    paymentOrder.getAmount(),
+                    paymentOrder.getId());
+
+            res.setPayment_link_url(paymentUrl);
+        }
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 
