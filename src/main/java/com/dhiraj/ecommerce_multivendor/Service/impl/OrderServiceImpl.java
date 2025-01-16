@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.dhiraj.ecommerce_multivendor.Domin.OrderStatus;
 import com.dhiraj.ecommerce_multivendor.Domin.PaymentStatus;
+import com.dhiraj.ecommerce_multivendor.Exceptions.OrderException;
 import com.dhiraj.ecommerce_multivendor.Modals.Address;
 import com.dhiraj.ecommerce_multivendor.Modals.Cart;
 import com.dhiraj.ecommerce_multivendor.Modals.CartItem;
@@ -128,4 +129,13 @@ public class OrderServiceImpl implements OrderService {
         return orderItemRepository.findById(id).orElseThrow(() -> new Exception("Order Item not found.."));
     }
 
+    @Override
+    public void deleteOrder(Long orderId) throws OrderException {
+        try {
+            Order order = findOrderById(orderId);
+            orderRepository.deleteById(orderId);
+        } catch (Exception e) {
+            throw new OrderException("Order not found");
+        }
+    }
 }

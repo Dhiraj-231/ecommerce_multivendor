@@ -59,7 +59,7 @@ public class ReviewController {
             @RequestHeader("Authorization") String token) throws Exception {
         User user = userService.findUserByJwtToken(token);
         reviewService.deleteReview(reviewId, user.getId());
-        return ResponseEntity.ok(new ApiResponse("Review deleted successfully"));
+        return ResponseEntity.ok(new ApiResponse("Review deleted successfully", true));
     }
 
 }

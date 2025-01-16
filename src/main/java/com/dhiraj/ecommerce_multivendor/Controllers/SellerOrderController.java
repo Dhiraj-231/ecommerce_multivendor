@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dhiraj.ecommerce_multivendor.Domin.OrderStatus;
+import com.dhiraj.ecommerce_multivendor.Exceptions.OrderException;
 import com.dhiraj.ecommerce_multivendor.Modals.Order;
 import com.dhiraj.ecommerce_multivendor.Modals.Seller;
+import com.dhiraj.ecommerce_multivendor.Response.ApiResponse;
 import com.dhiraj.ecommerce_multivendor.Service.OrderService;
 import com.dhiraj.ecommerce_multivendor.Service.SellerService;
 
@@ -41,6 +44,14 @@ public class SellerOrderController {
             @PathVariable Long orderId, @PathVariable OrderStatus orderStatus) throws Exception {
         Order order = orderService.updateOrderStatus(orderId, orderStatus);
         return new ResponseEntity<>(order, HttpStatus.ACCEPTED);
+    }
+     @DeleteMapping("/{orderId}/delete")
+    public ResponseEntity<ApiResponse> deleteOrderHandler(@PathVariable Long orderId,
+                                                          @RequestHeader("Authorization") String jwt) throws OrderException{
+        orderService.deleteOrder(orderId);
+        ApiResponse res=new ApiResponse("Order Deleted Successfully",true);
+        System.out.println("delete method working....");
+        return new ResponseEntity<>(res,HttpStatus.ACCEPTED);
     }
 
 }

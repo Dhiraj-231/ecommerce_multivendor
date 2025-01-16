@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.dhiraj.ecommerce_multivendor.Domin.OrderStatus;
+import com.dhiraj.ecommerce_multivendor.Exceptions.OrderException;
 import com.dhiraj.ecommerce_multivendor.Modals.Address;
 import com.dhiraj.ecommerce_multivendor.Modals.Cart;
 import com.dhiraj.ecommerce_multivendor.Modals.Order;
@@ -25,4 +26,6 @@ public interface OrderService {
     Order cancelOrder(Long orderId, User user) throws Exception;
 
     OrderItem findOrderItemById(Long id) throws Exception;
+
+    public void deleteOrder(Long orderId) throws OrderException;
 }
