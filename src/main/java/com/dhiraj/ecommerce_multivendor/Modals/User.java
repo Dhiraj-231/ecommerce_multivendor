@@ -12,6 +12,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import static jakarta.persistence.GenerationType.AUTO;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -41,5 +43,6 @@ public class User {
     private Set<Address> address = new HashSet<>();
     @ManyToMany
     @JsonIgnore
+    @JoinTable(name = "user_coupons", inverseJoinColumns = @JoinColumn(name = "coupon_id"))
     private Set<Coupon> usedCoupons = new HashSet<>();
 }
