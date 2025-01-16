@@ -45,13 +45,14 @@ public class SellerOrderController {
         Order order = orderService.updateOrderStatus(orderId, orderStatus);
         return new ResponseEntity<>(order, HttpStatus.ACCEPTED);
     }
-     @DeleteMapping("/{orderId}/delete")
+
+    @DeleteMapping("/{orderId}/delete")
     public ResponseEntity<ApiResponse> deleteOrderHandler(@PathVariable Long orderId,
-                                                          @RequestHeader("Authorization") String jwt) throws OrderException{
+            @RequestHeader("Authorization") String jwt) throws OrderException {
         orderService.deleteOrder(orderId);
-        ApiResponse res=new ApiResponse("Order Deleted Successfully",true);
+        ApiResponse res = new ApiResponse("Order Deleted Successfully", true);
         System.out.println("delete method working....");
-        return new ResponseEntity<>(res,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
     }
 
 }
