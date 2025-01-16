@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,12 @@ public class WishListController {
     private final WishListService wishListService;
     private final UserService userService;
     private final ProductService productService;
+
+    @PostMapping("/create")
+    public ResponseEntity<Wishlist> createWishlist(@RequestBody User user) {
+        Wishlist wishlist = wishListService.createWishList(user);
+        return ResponseEntity.ok(wishlist);
+    }
 
     @GetMapping()
     public ResponseEntity<Wishlist> getWishlistByUserId(@RequestHeader("Authorization") String token) throws Exception {

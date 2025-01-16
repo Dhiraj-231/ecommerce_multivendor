@@ -12,7 +12,7 @@ import com.dhiraj.ecommerce_multivendor.Service.impl.UserServiceImp;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
 
