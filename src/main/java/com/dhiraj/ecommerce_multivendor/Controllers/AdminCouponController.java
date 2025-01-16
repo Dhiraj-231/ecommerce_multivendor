@@ -22,7 +22,7 @@ import com.dhiraj.ecommerce_multivendor.Service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/admin/coupon")
+@RequestMapping("/api/coupons")
 @RequiredArgsConstructor
 public class AdminCouponController {
 
