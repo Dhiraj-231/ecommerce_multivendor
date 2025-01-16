@@ -51,14 +51,14 @@ public class OrderController {
 
     @PostMapping("/create")
     public ResponseEntity<PaymentLinkResponse> createOrderHandler(
-            @RequestBody Address spippingAddress,
+            @RequestBody Address shippingAddress,
             @RequestParam PaymentMethod paymentMethod,
             @RequestHeader("Authorization") String jwt) throws Exception {
 
         User user = userService.findUserByJwtToken(jwt);
         Cart cart = cartService.finduserCart(user);
 
-        Set<Order> orders = orderService.createOrder(user, spippingAddress, cart);
+        Set<Order> orders = orderService.createOrder(user, shippingAddress, cart);
         PaymentOrder paymentOrder = paymentService.createOrder(user, orders);
         PaymentLinkResponse res = new PaymentLinkResponse();
         if (paymentMethod.equals(PaymentMethod.RAZORPAY)) {
