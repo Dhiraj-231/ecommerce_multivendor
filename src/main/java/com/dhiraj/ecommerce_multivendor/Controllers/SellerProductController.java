@@ -7,12 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.dhiraj.ecommerce_multivendor.Exceptions.ProductException;
 import com.dhiraj.ecommerce_multivendor.Modals.Product;
@@ -23,7 +25,7 @@ import com.dhiraj.ecommerce_multivendor.Service.SellerService;
 
 import lombok.RequiredArgsConstructor;
 
-@Controller
+@RestController
 @RequestMapping("/seller/product")
 @RequiredArgsConstructor
 public class SellerProductController {
@@ -67,5 +69,14 @@ public class SellerProductController {
         Product updateProduct = productService.updateProduct(productId, product);
 
         return new ResponseEntity<>(updateProduct, HttpStatus.OK);
+    }
+     @PatchMapping("/{productId}/stock")
+    public ResponseEntity<Product> updateProductStock(@PathVariable Long productId) {
+        try {
+            Product updatedProduct = productService.updateProductStock(productId);
+            return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+        } catch (ProductException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

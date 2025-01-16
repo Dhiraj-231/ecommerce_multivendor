@@ -166,4 +166,11 @@ public class ProductServiceImpl implements ProductService {
         return 0;
     }
 
+    @Override
+    public Product updateProductStock(Long productId) throws ProductException {
+        Product product = this.findProductById(productId);
+        product.setIn_stock(!product.isIn_stock());
+        return productRepository.save(product);
+    }
+
 }
