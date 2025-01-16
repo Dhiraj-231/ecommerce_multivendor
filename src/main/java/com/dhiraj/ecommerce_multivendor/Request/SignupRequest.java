@@ -1,11 +1,12 @@
 package com.dhiraj.ecommerce_multivendor.Request;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class LoginRequest {
-
+@NoArgsConstructor
+public class SignupRequest {
+    private String fullName;
     private String email;
-    private String password;
     private String otp;
 }
