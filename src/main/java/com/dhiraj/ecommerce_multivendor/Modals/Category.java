@@ -1,10 +1,10 @@
 package com.dhiraj.ecommerce_multivendor.Modals;
 
+import static jakarta.persistence.GenerationType.AUTO;
+
 import org.antlr.v4.runtime.misc.NotNull;
 
 import jakarta.persistence.Column;
-import static jakarta.persistence.GenerationType.AUTO;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -28,7 +28,7 @@ public class Category {
 
     private String name;
 
-    @SuppressWarnings("deprecation")
+   
     @NotNull
     @Column(unique = true)
     private String categoryId;
@@ -36,7 +36,7 @@ public class Category {
     @ManyToOne
     private Category parentCategory;
 
-    @SuppressWarnings("deprecation")
+    
     @NotNull
     private Integer level;
 

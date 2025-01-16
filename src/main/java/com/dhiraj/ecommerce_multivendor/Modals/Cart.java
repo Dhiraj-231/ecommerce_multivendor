@@ -5,6 +5,7 @@ import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -32,7 +33,7 @@ public class Cart {
     @GeneratedValue(strategy = AUTO)
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private User user;
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CartItem> carItems = new HashSet<>();
@@ -41,4 +42,5 @@ public class Cart {
     private int totalMrpPrice;
     private int discount;
     private String couponCode;
+    private int couponPrice;
 }
