@@ -28,8 +28,8 @@ public class Coupon {
     @GeneratedValue(strategy = AUTO)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String code;
+    @Column(name = "coupon_code", unique = true, nullable = false)
+    private String couponCode;
     private double discountPercentage;
     private LocalDate validityStartDate;
     private LocalDate validityEndDate;
