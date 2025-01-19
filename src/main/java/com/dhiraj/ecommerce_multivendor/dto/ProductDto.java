@@ -1,5 +1,6 @@
 package com.dhiraj.ecommerce_multivendor.dto;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,5 +26,9 @@ public class ProductDto {
 
     private List<String> images = new ArrayList<>();
 
+    private LocalDateTime createdAt;
+
     private int numRatings;
+
+    private String Sizes;
 }
