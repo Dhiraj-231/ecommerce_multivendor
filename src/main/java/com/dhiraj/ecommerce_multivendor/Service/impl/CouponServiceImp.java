@@ -18,7 +18,6 @@ import com.dhiraj.ecommerce_multivendor.Service.CouponService;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequestMapping("/coupon")
 @RequiredArgsConstructor
 public class CouponServiceImp implements CouponService {
 
